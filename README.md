@@ -51,9 +51,9 @@ docker-compose  up -d
 
 按照上一步，验证productpage是否正常
 
-4. 验证istio功能
+5. 验证istio功能
 
-   
+
 
 ```
 cd bookinfo
