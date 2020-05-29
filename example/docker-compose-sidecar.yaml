@@ -1,0 +1,26 @@
+services:
+  ic-init:
+    cap_add:
+    - NET_ADMIN
+    command:
+    - -p
+    - '15001'
+    - -u
+    - '1337'
+    - -m
+    - REDIRECT
+    - -i
+    - '*'
+    - -b
+    - '9080'
+    image: istio/proxy_init:1.3.8
+    network_mode: container:consul_istio-client_1
+  ic-sidecar:
+    entrypoint:
+      - su
+      - istio-proxy
+      - -c
+      - "/usr/local/bin/pilot-agent proxy --serviceregistry Consul --serviceCluster ic --zipkinAddress zipkin:9411 --configPath /var/lib/istio >/tmp/envoy.log"
+    image: istio/proxyv2:1.4.5
+    network_mode: container:consul_istio-client_1
+version: '2.0'

@@ -1,0 +1,159 @@
+services:
+  details-v1-init:
+    cap_add:
+    - NET_ADMIN
+    command:
+    - -p
+    - '15001'
+    - -u
+    - '1337'
+    - -m
+    - REDIRECT
+    - -i
+    - '*'
+    - -b
+    - '9080'
+    image: istio/proxy_init:1.3.8
+    #image: istio/proxyv2:1.5.2
+    network_mode: container:consul_details-v1_1
+  details-v1-sidecar:
+    entrypoint:
+    - su
+    - istio-proxy
+    - -c
+    - /usr/local/bin/pilot-agent proxy --serviceregistry Consul --serviceCluster details-v1
+      --zipkinAddress zipkin:9411 --configPath /var/lib/istio >/tmp/envoy.log
+    image: istio/proxyv2:1.5.2
+    network_mode: container:consul_details-v1_1
+  productpage-v1-init:
+    cap_add:
+    - NET_ADMIN
+    entrypoint:
+    - istio-iptables
+    - -p
+    - '15001'
+    - -z
+    - '15006'
+    - -u
+    - '1337'
+    - -m
+    - REDIRECT
+    - -i
+    - '*'
+    - -b
+    - '9080'
+    image: istio/proxyv2:1.5.2
+    #image: istio/proxy_init:1.3.8
+    network_mode: container:consul_productpage-v1_1
+  productpage-v1-sidecar:
+    entrypoint:
+      - su
+      - istio-proxy
+      - -c
+      - "/usr/local/bin/pilot-agent proxy --serviceregistry Consul --serviceCluster productpage-v1 --zipkinAddress zipkin:9411 --configPath /var/lib/istio >/tmp/envoy.log"
+    image: istio/proxyv2:1.4.5
+    network_mode: container:consul_productpage-v1_1
+  ratings-v1-init:
+    cap_add:
+    - NET_ADMIN
+    command:
+    - -p
+    - '15001'
+    - -u
+    - '1337'
+    - -m
+    - REDIRECT
+    - -i
+    - '*'
+    - -b
+    - '9080'
+    image: istio/proxy_init:1.3.8
+    network_mode: container:consul_ratings-v1_1
+  ratings-v1-sidecar:
+    entrypoint:
+    - su
+    - istio-proxy
+    - -c
+    - /usr/local/bin/pilot-agent proxy --serviceregistry Consul --serviceCluster ratings-v1
+      --zipkinAddress zipkin:9411 --configPath /var/lib/istio >/tmp/envoy.log
+    image: istio/proxyv2:1.5.2
+    network_mode: container:consul_ratings-v1_1
+  reviews-v1-init:
+    cap_add:
+    - NET_ADMIN
+    command:
+    - -p
+    - '15001'
+    - -u
+    - '1337'
+    - -m
+    - REDIRECT
+    - -i
+    - '*'
+    - -b
+    - '9080'
+    image: istio/proxy_init:1.3.8
+    network_mode: container:consul_reviews-v1_1
+  reviews-v1-sidecar:
+    entrypoint:
+    - su
+    - istio-proxy
+    - -c
+    - /usr/local/bin/pilot-agent proxy --serviceregistry Consul --serviceCluster reviews-v1
+      --zipkinAddress zipkin:9411 --configPath /var/lib/istio >/tmp/envoy.log
+    image: istio/proxyv2:1.4.5
+    environment:
+    - JWT_POLICY=first-party-jwt
+    network_mode: container:consul_reviews-v1_1
+  reviews-v2-init:
+    cap_add:
+    - NET_ADMIN
+    command:
+    - -p
+    - '15001'
+    - -u
+    - '1337'
+    - -m
+    - REDIRECT
+    - -i
+    - '*'
+    - -b
+    - '9080'
+    image: istio/proxy_init:1.3.8
+    network_mode: container:consul_reviews-v2_1
+  reviews-v2-sidecar:
+    entrypoint:
+    - su
+    - istio-proxy
+    - -c
+    - /usr/local/bin/pilot-agent proxy --serviceregistry Consul --serviceCluster reviews-v2
+      --zipkinAddress zipkin:9411 --configPath /var/lib/istio >/tmp/envoy.log
+    image: istio/proxyv2:1.5.2
+    network_mode: container:consul_reviews-v2_1
+  reviews-v3-init:
+    cap_add:
+    - NET_ADMIN
+    command:
+    - -p
+    - '15001'
+    - -u
+    - '1337'
+    - -m
+    - REDIRECT
+    - -i
+    - '*'
+    - -b
+    - '9080'
+    image: istio/proxy_init:1.3.8
+    network_mode: container:consul_reviews-v3_1
+  reviews-v3-sidecar:
+    entrypoint:
+    - su
+    - istio-proxy
+    - -c
+    - /usr/local/bin/pilot-agent proxy --serviceregistry Consul --serviceCluster reviews-v3
+      --zipkinAddress zipkin:9411 --configPath /var/lib/istio >/tmp/envoy.log
+    image: istio/proxyv2:1.5.2
+    network_mode: container:consul_reviews-v3_1
+version: '2.0'
+

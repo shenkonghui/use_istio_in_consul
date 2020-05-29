@@ -1,0 +1,65 @@
+version: '2'
+services:
+  sc-client0:
+    image: 'registry.cn-hangzhou.aliyuncs.com/shenkonghui/sc-client:0'
+    networks:
+      istiomesh:
+    dns:
+      - 172.28.0.1
+      - 8.8.8.8
+    dns_search:
+        - service.consul
+    environment:
+      - spring_cloud_consul_enabled=true
+      - spring_cloud_consul_host=10.211.55.6
+      - spring_cloud_consul_port=8500
+      - spring_cloud_consul_discovery_instance-id=sc0
+      - spring_cloud_consul_discovery_prefer-ip-address=true
+      - my_request_name=ic
+      - spring_application_name=sc0 
+    expose:
+      - "8080"
+    ports:
+      - "38080:8080"
+  istio-client:
+    image: 'registry.cn-hangzhou.aliyuncs.com/shenkonghui/sc-client:0'
+    networks:
+      istiomesh:
+    dns:
+      - 172.28.0.1
+      - 8.8.8.8
+    dns_search:
+        - service.consul
+    environment:
+      - spring_cloud_consul_enabled=false
+      - spring_cloud_consul_host=10.211.55.6
+      - spring_cloud_consul_port=8500
+      - spring_cloud_consul_discovery_instance-id=ic
+      - spring_cloud_consul_discovery_prefer-ip-address=true
+      - SERVICE_TAGS=version|v1
+      - SERVICE_PROTOCOL=http
+      - SERVICE_NAME=ic
+      # 通过istio服务发现直接访问sc1
+      - my_request_name=http://sc1.service.consul:8080
+      - spring_application_name=ic
+  sc-client1:
+    image: 'registry.cn-hangzhou.aliyuncs.com/shenkonghui/sc-client:0'
+    networks:
+      istiomesh:
+    dns:
+      - 172.28.0.1
+      - 8.8.8.8
+    dns_search:
+        - service.consul
+    environment:
+      - spring_cloud_consul_enabled=true
+      - spring_cloud_consul_host=10.211.55.6
+      - spring_cloud_consul_port=8500
+      - spring_cloud_consul_discovery_instance-id=sc1
+      - spring_application_name=sc1
+      - spring_cloud_consul_discovery_prefer-ip-address=true
+      - my_request_name=null
+networks:
+  istiomesh:
+    external:
+      name: consul_istiomesh
