@@ -90,7 +90,7 @@ https://github.com/istio/istio/issues/18832
 pkg/mod/k8s.io/client-
 go@v0.17.2/tools/cache/reflector.go:105: Failed to list *crd.IstioNetworkingV1Alpha3Envoyfilters: the server could not find the requested resource (get envoyfilters.networking.istio.io)
 
-将api-service版本切换为1.7.2 ，并安装crd
+将api-service版本切换为v1.17.2 ，并安装crd
 
 
 

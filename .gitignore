@@ -8,3 +8,6 @@ spring-boot-test/.mvn/wrapper/maven-wrapper.jar
 spring-boot-test/.mvn/wrapper/maven-wrapper.jar
 spring-boot-test/.mvn/wrapper/maven-wrapper.jar
 *.jar
+spring-boot-test/HELP.md
+spring-boot-test/mvnw
+spring-boot-test/spring-cloud-consul.iml
