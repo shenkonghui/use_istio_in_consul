@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: registrator
+  namespace: istio-system
+  labels:
+    app: registrator
+spec:
+  selector:
+    matchLabels:
+      app: registrator
+  template:
+    metadata:
+      labels:
+        app: registrator
+    spec:
+      containers:
+      - name: registrator
+        args: ["-explicit","-internal", "-retry-attempts=-1","-retry-interval=5000" ,"consul://consul-ui:80"]
+        image: gliderlabs/registrator:master
+        volumeMounts:
+        - name: docker
+          mountPath: /tmp/docker.sock
+      volumes:
+      - name: docker
+        hostPath:
+          path: /var/run/docker.sock

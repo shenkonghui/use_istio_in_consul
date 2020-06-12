@@ -1,6 +1,6 @@
 *.cmd
-spring-boot-test/.idea
-spring-boot-test/target
+*/spring-boot-test/.idea
+*/spring-boot-test/target
 ring-boot-test/mvnw
 spring-boot-test/.mvn/wrapper/maven-wrapper.jar
 spring-boot-test/.mvn/wrapper/maven-wrapper.properties

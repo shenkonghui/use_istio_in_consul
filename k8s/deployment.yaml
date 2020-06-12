@@ -1,0 +1,124 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sc-0
+  labels:
+    app: sc-0
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sc-0
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "false"
+      labels:
+        app: sc-0
+    spec:
+      containers:
+      - name: sc-0
+        image: registry.cn-hangzhou.aliyuncs.com/shenkonghui/sc-client:0
+        ports:
+        - containerPort: 8080
+        env:
+        - name: spring_cloud_consul_enabled
+          value: "true"
+        - name: spring_cloud_consul_host
+          value: "consul-consul-ui.istio-system"
+        - name: spring_cloud_consul_port
+          value: "80"
+        - name: spring_cloud_consul_discovery_instance-id
+          value: "sc0"
+        - name: spring_cloud_consul_discovery_prefer-ip-address
+          value: "true"
+        - name: my_request_name
+          value: "ic"
+        - name: spring_application_name
+          value: "sc0"
+         
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sc-1
+  labels:
+    app: sc-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sc-1
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "false"
+      labels:
+        app: sc-1
+    spec:
+      containers:
+      - name: sc-1
+        image: registry.cn-hangzhou.aliyuncs.com/shenkonghui/sc-client:0
+        ports:
+        - containerPort: 8080
+        env:
+        - name: spring_cloud_consul_enabled
+          value: "true"
+        - name: spring_cloud_consul_host
+          value: "consul-consul-ui.istio-system"
+        - name: spring_cloud_consul_port
+          value: "80"
+        - name: spring_cloud_consul_discovery_instance-id
+          value: "sc1"
+        - name: spring_cloud_consul_discovery_prefer-ip-address
+          value: "true"
+        - name: my_request_name
+          value: "null"
+        - name: spring_application_name
+          value: "sc1"
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ic
+  labels:
+    app: ic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ic
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: ic
+    spec:
+      containers:
+      - name: ic
+        image: registry.cn-hangzhou.aliyuncs.com/shenkonghui/sc-client:0
+        ports:
+        - containerPort: 8080
+        env:
+        - name: spring_cloud_consul_enabled
+          value: "false"
+        - name: spring_cloud_consul_host
+          value: "consul-consul-ui.istio-system"
+        - name: spring_cloud_consul_port
+          value: "80"
+        - name: spring_cloud_consul_discovery_instance-id
+          value: "istio-client"
+        - name: spring_cloud_consul_discovery_prefer-ip-address
+          value: "true"
+        - name: my_request_name
+          value: "http://sc1:8080"
+        - name: spring_application_name
+          value: "istio-client"
+        - name: SERVICE_TAGS
+          value: version|v1
+        - name: SERVICE_PROTOCOL
+          value: http
+        - name: SERVICE_NAME
+          value: ic
