@@ -43,7 +43,7 @@
 
    ![image-20200612211538924](.assets/image-20200612211538924.png)
    
-   3. 尝试创建demo，手动实现注册consul、这个的sc0是手动注册的，sc0-springcloud 是{k8s service}-{namesce}
+3. 尝试创建demo，手动实现注册consul、这个的sc0是手动注册的，sc0-springcloud 是{k8s service}-{namesce}
    
    ![image-20200614185919854](.assets/image-20200614185919854.png)
 
