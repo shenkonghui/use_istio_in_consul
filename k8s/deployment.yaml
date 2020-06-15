@@ -30,6 +30,8 @@ spec:
           value: "80"
         - name: spring_cloud_consul_discovery_instance-id
           value: "sc0"
+        - name: spring_cloud_consul_discovery_tags
+          value: "version,v1"
         - name: spring_cloud_consul_discovery_prefer-ip-address
           value: "true"
         - name: my_request_name
@@ -70,6 +72,8 @@ spec:
           value: "80"
         - name: spring_cloud_consul_discovery_instance-id
           value: "sc1"
+        - name: spring_cloud_consul_discovery_tags
+          value: "version,v1"
         - name: spring_cloud_consul_discovery_prefer-ip-address
           value: "true"
         - name: my_request_name
@@ -84,17 +88,20 @@ metadata:
   name: ic
   labels:
     app: ic
+    version: v1
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: ic
+      version: v1
   template:
     metadata:
       annotations:
         sidecar.istio.io/inject: "true"
       labels:
         app: ic
+        version: v1
     spec:
       containers:
       - name: ic
