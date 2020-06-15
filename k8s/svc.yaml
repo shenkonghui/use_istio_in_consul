@@ -21,7 +21,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: sc-1-tmp
+    app: sc-1
   ports:
   - name: http
     port: 8080
