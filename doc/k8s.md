@@ -53,8 +53,6 @@
 
 访问流程图如下
 
-![k8sdemo](.assets/k8sdemo.png
-
 ![代码逻辑](.assets/代码逻辑.png)
 
 
