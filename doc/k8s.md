@@ -63,7 +63,7 @@
    cd k8s 
    # 部署3个应用的deployment
    kubectl apply -f deployment.yaml
-   # 部署3个svc
+   # 部署svc
    kubectl apply -f svc.yaml
    # 创建istio路由
    kubectl apply -f rule.yaml
