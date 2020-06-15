@@ -150,8 +150,10 @@ https://www.consul.io/docs/k8s/connect#installation-and-configuration
 
 虽然istio应用注入sidecar以后，所有流量均走envoy过。但是之前必须得先走一次dns解析才行，所以就失败了
 
-解决方案：需要创建一个同名的service
+解决方案1：需要创建一个同名的service(不可行)
 
-但是最后会在sidecar的envoy中出现2个svc共存的情况。暂时不确定会不会存在问题。尝试使用consul自身的dns服务
+但是最后会在sidecar的envoy中出现2个svc共存的情况
+解决方案2：
+尝试使用consul自身的dns服务
 
 ![image-20200615100138313](.assets/image-20200615100138313.png)
