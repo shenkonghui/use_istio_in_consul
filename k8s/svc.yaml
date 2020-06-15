@@ -15,20 +15,6 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: sc1
-  labels:
-    app: sc1
-spec:
-  type: ClusterIP
-  selector:
-    app: sc-1
-  ports:
-  - name: http
-    port: 8080
----
-kind: Service
-apiVersion: v1
-metadata:
   annotations:
     'consul.hashicorp.com/service-name': ic
     'consul.hashicorp.com/service-port': 'http'

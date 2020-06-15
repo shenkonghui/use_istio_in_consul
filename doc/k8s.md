@@ -39,13 +39,13 @@
 
    https://www.consul.io/docs/k8s/service-sync
 
-   安装完毕后、会发现k8s的服务都已经被同步到
+   安装完毕后、会发现k8s的服务都已经被同步到 。可以在service中设置annotations的key 为“consul.hashicorp.com/service-name” 等 提供具体的注册服务
 
    ![image-20200612211538924](.assets/image-20200612211538924.png)
    
-   3. 尝试创建demo，手动实现注册consul、这个的sc0是手动注册的，sc0-springcloud 是{k8s service}-{namesce}
+   3. 尝试创建demo，手动实现注册consul、这个的sc1是手动注册的
    
-   ![image-20200614185919854](.assets/image-20200614185919854.png)
+   ![image-20200615155857705](.assets/image-20200615155857705.png)
 
 
 
@@ -81,7 +81,7 @@
 
    Istio-ingress-gateway到sc0 是正确的，然后后面断了，因为sc0的应用没有sidecar，无法上报状态
 
-   ![image-20200614183514511](.assets/image-20200614183514511.png)
+   ![image-20200615155443811](.assets/image-20200615155443811.png)
 
 
 
@@ -89,15 +89,15 @@
 
 ## 结论：
 
-spring cloud应用 -> istio 应用
+1. spring cloud应用 -> istio 应用
 
-直接通过consul方式获取注册应用的ip进行访问 可行
+通过consul方式获取注册应用的ip进行访问。 可行
 
 
 
-istio应用 -> sping cloud应用
+2. istio应用 -> sping cloud应用
 
-直接访问spring cloud在consul中注册的服务名进行访问，存在问题，
+直接访问spring cloud在consul中注册的服务名, 需要给pod设置consul 的dns服务器提供解析。可行
 
 
 
@@ -152,6 +152,6 @@ https://www.consul.io/docs/k8s/connect#installation-and-configuration
 
 解决方案：需要创建一个同名的service
 
-但是最后会在sidecar的envoy中出现2个svc共存的情况。暂时不确定会不会存在问题。
+但是最后会在sidecar的envoy中出现2个svc共存的情况。暂时不确定会不会存在问题。尝试使用consul自身的dns服务
 
 ![image-20200615100138313](.assets/image-20200615100138313.png)

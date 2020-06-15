@@ -103,6 +103,16 @@ spec:
         app: ic
         version: v1
     spec:
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 10.106.187.186
+        - 10.96.0.10
+        searches:
+        - service.consul
+        - svc.cluster.local
+        - cluster.local
+        - springcloud.svc.cluster.local
       containers:
       - name: ic
         image: registry.cn-hangzhou.aliyuncs.com/shenkonghui/sc-client:0
@@ -123,9 +133,3 @@ spec:
           value: "http://sc1:8080"
         - name: spring_application_name
           value: "istio-client"
-        - name: SERVICE_TAGS
-          value: version|v1
-        - name: SERVICE_PROTOCOL
-          value: http
-        - name: SERVICE_NAME
-          value: ic
