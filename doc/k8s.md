@@ -59,7 +59,7 @@
 
 
 
-1. 部署demo(首先需要打开namespace级别的自动注入)，和docker-cmpos
+1. 部署demo(首先需要打开namespace级别的自动注入)
 
    ```shell
    cd k8s 
@@ -153,7 +153,11 @@ https://www.consul.io/docs/k8s/connect#installation-and-configuration
 解决方案1：需要创建一个同名的service(不可行)
 
 但是最后会在sidecar的envoy中出现2个svc共存的情况
-解决方案2：
-尝试使用consul自身的dns服务
 
 ![image-20200615100138313](.assets/image-20200615100138313.png)
+
+解决方案2：尝试使用consul自身的dns服务（可行）
+
+需要在pod中配置额外的consul dns服务
+
+![image-20200615161437065](.assets/image-20200615161437065.png)
